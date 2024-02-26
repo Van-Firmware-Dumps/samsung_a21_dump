@@ -1,0 +1,14 @@
+# a21sq-user 12 SP1A.210812.016 A215USQSCCXA2 release-keys
+- manufacturer: samsung
+- platform: mt6765
+- codename: a21
+- flavor: a21sq-user
+- release: 12
+- id: SP1A.210812.016
+- incremental: A215USQSCCXA2
+- tags: release-keys
+- fingerprint: samsung/a21sq/a21:12/SP1A.210812.016/A215USQSCCXA2:user/release-keys
+- is_ab: false
+- brand: samsung
+- branch: a21sq-user-12-SP1A.210812.016-A215USQSCCXA2-release-keys
+- repo: samsung_a21_dump
