@@ -1,0 +1,6 @@
+on property:ro.boot.carrierid=VZW
+    setprop ssu.support 1
+on property:ro.boot.carrierid=TMB
+    setprop ssu.support 1
+on property:ro.boot.carrierid=TMK
+    setprop ssu.support 1

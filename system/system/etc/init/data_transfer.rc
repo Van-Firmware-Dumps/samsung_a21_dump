@@ -1,0 +1,7 @@
+service data_transfer /system/bin/data_transfer
+    class main
+    user system
+    group system shell radio sdcard_rw inet media_rw
+	
+	on property:vendor.mdlogger.Running=1
+    stop data_transfer

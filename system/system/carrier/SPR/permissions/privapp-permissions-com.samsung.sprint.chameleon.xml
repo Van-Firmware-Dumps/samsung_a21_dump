@@ -1,0 +1,7 @@
+<permissions>
+    <privapp-permissions package="com.samsung.sprint.chameleon">
+        <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>
+        <permission name="android.permission.REBOOT"/>
+        <permission name="android.permission.DELETE_PACKAGES"/>
+    </privapp-permissions>
+</permissions>
