@@ -1,0 +1,229 @@
+# MTK project .rc configure
+
+import init.mt6765.usb.rc
+
+on early-init
+    exec_background u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -a -d /vendor/lib/modules helloworld.ko trace_mmstat.ko
+
+on init
+    mkdir /mnt/media_rw/usbotg 0700 media_rw media_rw
+    mkdir /storage/usbotg 0700 root root
+    
+# Create carrier folder for HiddenMenu
+on post-fs
+    mkdir /efs/carrier 0755 system system
+
+on fs
+    # carrier
+    wait /dev/block/platform/bootdevice/by-name/carrier
+#    check_fs /dev/block/platform/bootdevice/by-name/carrier ext4
+    mount ext4 /dev/block/platform/bootdevice/by-name/carrier /carrier nosuid nodev noatime noauto_da_alloc,discard,journal_checksum,data=ordered,errors=panic
+
+on post-fs-data
+
+#Camera
+    chmod 0660 /dev/MAINAF
+    chown system camera /dev/MAINAF
+
+    chmod 0660 /dev/MAINAF2
+    chown system camera /dev/MAINAF2
+
+    chmod 0660 /dev/SUBAF
+    chown system camera /dev/SUBAF
+
+    chmod 0660 /dev/GAF001AF
+    chown system camera /dev/GAF001AF
+
+    chmod 0660 /dev/DW9714AF
+    chown system camera /dev/DW9714AF
+
+    chmod 0660 /dev/LC898212AF
+    chown system camera /dev/LC898212AF
+
+    chmod 0660 /dev/BU64745GWZAF
+    chown system camera /dev/BU64745GWZAF
+
+#SMB
+    chown system system /proc/smb/ScreenComm
+    chmod 0660 /proc/smb/ScreenComm
+
+    chmod 0660 /dev/spm
+    chown system system /dev/spm
+	
+	# Bug 730923 chenmengchao.wt , 20220316,add Create anc face unlock dir
+    mkdir /data/vendor/anc_face_unlock
+    chown root system /data/vendor/anc_face_unlock
+    chmod 0771 /data/vendor/anc_face_unlock
+
+    mkdir /vendor/app/anc_face_unlock
+    chown root system /vendor/app/anc_face_unlock
+    chmod 0771 /vendor/app/anc_face_unlock	
+    # Bug 730923 chenmengchao.wt , 20220316,add Create anc face unlock dir
+    #+bug 621775,liuxiangyin.wt,add,2022/4/18,add n21 dualcamera calibiration
+    #restorecon_recursive /mnt/vendor/persist
+    mkdir /mnt/vendor/persist/camera  0777 cameraserver cameraserver
+    chmod 0664 /mnt/vendor/persist/camera/calib_result
+    #-bug 621775,liuxiangyin.wt,add,2022/4/18,add n21 dualcamera calibiration
+    #bug sar sensor bringup
+    #For sar-sensor
+    #Allow access to sar sensors device attributes
+    chown system system /sys/class/sensors/capsense_bottom/enable
+    chown system system /sys/class/sensors/capsense_bottom/poll_delay
+    chown system system /sys/class/sensors/capsense_bottom/enable_wakeup
+    chmod 0660 /sys/class/sensors/capsense_bottom/enable
+    chmod 0660 /sys/class/sensors/capsense_bottom/poll_delay
+    chmod 0660 /sys/class/sensors/capsense_bottom/enable_wakeup
+
+    chown system system /sys/class/sensors/capsense_topleft/enable
+    chown system system /sys/class/sensors/capsense_topleft/poll_delay
+    chown system system /sys/class/sensors/capsense_topleft/enable_wakeup
+    chmod 0660 /sys/class/sensors/capsense_topleft/enable
+    chmod 0660 /sys/class/sensors/capsense_topleft/poll_delay
+    chmod 0660 /sys/class/sensors/capsense_topleft/enable_wakeup
+
+    chown system system /sys/class/sensors/capsense_topright/enable
+    chown system system /sys/class/sensors/capsense_topright/poll_delay
+    chown system system /sys/class/sensors/capsense_topright/enable_wakeup
+    chmod 0660 /sys/class/sensors/capsense_topright/enable
+    chmod 0660 /sys/class/sensors/capsense_topright/poll_delay
+    chmod 0660 /sys/class/sensors/capsense_topright/enable_wakeup
+
+    chown system system  /sys/class/input/input2/enable
+    chmod 0660 /sys/class/input/input2/enable
+    chown system system  /sys/class/input/input3/enable
+    chmod 0660 /sys/class/input/input3/enable
+    chown system system  /sys/class/input/input4/enable
+    chmod 0660 /sys/class/input/input4/enable
+
+    chown system system  /dev/input/event2
+    chmod 0660 /dev/input/event2
+    chown system system  /dev/input/event3
+    chmod 0660 /dev/input/event3
+    chown system system  /dev/input/event4
+    chmod 0660 /dev/input/event4
+
+    chown system system /sys/class/capsense/reg_ch0
+    chown system system /sys/class/capsense/reg_ch1
+    chown system system /sys/class/capsense/reg_ch2
+
+#+bug 621776,zhanghao3.wt,modify,20210203,finegrprint bingup
+#Fingerprint
+    chown system system /sys/bus/platform/devices/fpsensor_finger/clk_enable
+    chmod 0600 /sys/bus/platform/devices/fpsensor_finger/clk_enable
+
+    chown system system /sys/bus/platform/devices/fpsensor_finger/wakeup_enable
+    chmod 0600 /sys/bus/platform/devices/fpsensor_finger/wakeup_enable
+
+    chown system system /sys/bus/platform/devices/fpsensor_finger/irq
+    chmod 0600 /sys/bus/platform/devices/fpsensor_finger/irq
+
+    chown system radio /sys/class/fingerprint/fingerprint/adm
+    chmod 0444 /sys/class/fingerprint/fingerprint/adm
+
+    # add for fpsensor Fingerprint
+    chmod 660 /dev/fpsensor
+    chown system system /dev/fpsensor
+
+    #for egis fingerprint
+    chown system system /dev/esfp0
+    chmod 0660 /dev/esfp0
+#-bug 621776,zhanghao3.wt,modify,20210203,finegrprint bingup
+    #+Req 496076  , dengyixuan.cdzk, ADD, 2020.06.07, config the dualcam bokeh feature
+    #Create calibration dir by anc
+    mkdir /data/vendor/anc 0777 cameraserver audio
+    mkdir /data/vendor/anc/dof_model 0777 cameraserver audio
+    mkdir /data/vendor/anc/rt_model 0777 cameraserver audio
+    mkdir /data/vendor/anc/rt_model/mask 0777 cameraserver audio
+    mkdir /data/vendor/anc/rt_model/score 0777 cameraserver audio
+    copy  /vendor/etc/anc/dof_model/cache_data /data/vendor/anc/dof_model/cache_data
+    chown cameraserver audio /data/vendor/anc/dof_model/cache_data
+    copy  /vendor/etc/anc/dof_model/segment_model /data/vendor/anc/dof_model/segment_model
+    chown cameraserver audio /data/vendor/anc/dof_model/segment_model
+    copy  /vendor/etc/anc/dof_model/model_mdl_cache /data/vendor/anc/dof_model/model_mdl_cache
+    chown cameraserver audio /data/vendor/anc/dof_model/model_mdl_cache
+    copy  /vendor/etc/anc/rt_model/mask/cache_data /data/vendor/anc/rt_model/mask/cache_data
+    chown cameraserver audio /data/vendor/anc/rt_model/mask/cache_data
+    copy  /vendor/etc/anc/rt_model/mask/segment_model /data/vendor/anc/rt_model/mask/segment_model
+    chown cameraserver audio /data/vendor/anc/rt_model/mask/segment_model
+    copy  /vendor/etc/anc/rt_model/mask/model_mdl_cache /data/vendor/anc/rt_model/mask/model_mdl_cache
+    chown cameraserver audio /data/vendor/anc/rt_model/mask/model_mdl_cache
+    copy  /vendor/etc/anc/rt_model/score/cache_data /data/vendor/anc/rt_model/score/cache_data
+    chown cameraserver audio /data/vendor/anc/rt_model/score/cache_data
+    copy  /vendor/etc/anc/rt_model/score/segment_model /data/vendor/anc/rt_model/score/segment_model
+    chown cameraserver audio /data/vendor/anc/rt_model/score/segment_model
+    copy  /vendor/etc/anc/rt_model/score/model_mdl_cache /data/vendor/anc/rt_model/score/model_mdl_cache
+    chown cameraserver audio /data/vendor/anc/rt_model/score/model_mdl_cache
+    chmod 0777 /data/vendor/anc/dof_model/cache_data
+    chmod 0777 /data/vendor/anc/dof_model/segment_model
+    chmod 0777 /data/vendor/anc/dof_model/model_mdl_cache
+    chmod 0777 /data/vendor/anc/rt_model/mask/cache_data
+    chmod 0777 /data/vendor/anc/rt_model/mask/segment_model
+    chmod 0777 /data/vendor/anc/rt_model/mask/model_mdl_cache
+    chmod 0777 /data/vendor/anc/rt_model/score/cache_data
+    chmod 0777 /data/vendor/anc/rt_model/score/segment_model
+    chmod 0777 /data/vendor/anc/rt_model/score/model_mdl_cache
+    #-Req 496076  , dengyixuan.cdzk, ADD, 2020.06.07, config the dualcam bokeh feature
+#bug sar sensor bringup
+
+   #+bug 621775,lintaicheng.wt,add,2021/03/15,fix flashlight node in factory APP
+   chmod 0666 /sys/devices/platform/flashlights_mt6370/led_flash
+   chown system system /sys/devices/platform/flashlights_mt6370/led_flash
+   #-bug 621775,lintaicheng.wt,add,2021/03/15,fix flashlight node in factory APP
+
+   #+bug P210601-06566,yuchanglin01.wt,add,2021/07/01,fix flashlight/torch level are not changing as per slider
+   chown system system /sys/class/camera/flash/rear_flash
+   chmod 0666 /sys/class/camera/flash/rear_flash
+   #-bug P210601-06566,yuchanglin01.wt,add,2021/07/01,fix flashlight/torch level are not changing as per slider
+
+on init
+    # Refer to http://source.android.com/devices/tech/storage/index.html
+    # It said, "Starting in Android 4.4, multiple external storage devices are surfaced to developers through
+    #           Context.getExternalFilesDirs(), Context.getExternalCacheDirs(), and Context.getObbDirs().
+    #           External storage devices surfaced through these APIs must be a semi-permanent part of the device (such as an SD card slot in a battery compartment).
+    #           Developers expect data stored in these locations to be available over long periods of time."
+    # Therefore, if the target doesn't support sd hot-plugging (Ex: the SD card slot in a battery compartment), we need to export SECONDARY_STORAGE in 'boot' section
+    #
+    # export SECONDARY_STORAGE /storage/sdcard1
+
+service fuse_usbotg /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/usbotg /storage/usbotg
+    class late_start
+    disabled
+
+service spm_script /vendor/bin/spm_loader
+    user system
+    group system
+    class core
+    oneshot
+
+# start remosaic_daemon
+on property:sys.boot_completed=1
+    start remosaic_daemon
+
+service remosaic_daemon /vendor/bin/remosaic_daemon
+    class core
+    user system
+    group system
+    oneshot
+    disabled
+
+# start mmstat
+on property:sys.boot_completed=1
+    mkdir /sys/kernel/tracing/instances/mmstat 711
+    write /sys/kernel/tracing/instances/mmstat/tracing_on 0
+    write /sys/kernel/tracing/instances/mmstat/buffer_size_kb 16
+    write /sys/kernel/tracing/instances/mmstat/events/mmstat/enable 1
+    write /sys/kernel/tracing/instances/mmstat/tracing_on 1
+	
+# some priv-apps of SPR bind mount to TMB priv-apps
+on post-fs-data && property:ro.csc.sales_code=TMB
+    umount /system/carrier
+    mkdir /mnt/temp
+    mount none /system/carrier/SPR /mnt/temp bind
+    mount none /system/carrier/TMB /system/carrier bind
+    mount none /mnt/temp/priv-app/MobileID /system/carrier/priv-app/MobileID bind
+    mount none /mnt/temp/priv-app/CarrierDeviceManager /system/carrier/priv-app/CarrierDeviceManager bind
+    mount none /mnt/temp/priv-app/MobileInstaller /system/carrier/priv-app/MobileInstaller bind
+    mount none /mnt/temp/priv-app/SprintAndroidExtension2 /system/carrier/priv-app/SprintAndroidExtension2 bind
+    mount none /mnt/temp/priv-app/SprintHub /system/carrier/priv-app/SprintHub bind
+    umount /mnt/temp
+    rmdir /mnt/temp

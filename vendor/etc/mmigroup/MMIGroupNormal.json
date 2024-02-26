@@ -1,0 +1,205 @@
+{
+  "call": {
+    "com.mmigroup.radiosupport.GSM": false,
+    "com.mmigroup.radiosupport.CDMA": false,
+    "com.mmigroup.radiosupport.TDCDMA": false,
+    "com.mmigroup.radiosupport.WCDMA": false,
+    "com.mmigroup.radiosupport.TDD": false,
+    "com.mmigroup.radiosupport.FDD": false,
+    "com.mmigroup.radiosupport.LTE": false
+  },
+  "systemConfig": {
+    "SW_Ver": false,
+    "SS_ver": true,
+    "EFS": false,
+    "RPMB_provisioned": false,
+    "Secureboot": false,
+    "KeyBox_Written": false,
+    "Attestation": false,
+    "Flash": true,
+    "Flash_fw": true,
+    "SN": false,
+    "PhoneSN": false
+  },
+  "itemConfig": [
+    {
+      "showName": "VersionInfo"
+    },
+    {
+      "showName": "KeyPad",
+      "paramconfig": {
+        "keyCode": [
+          "VOLUME_UP",
+          "VOLUME_DOWN"
+        ]
+      }
+    },
+    {
+      "showName": "SMARTPA"
+    },
+    {
+      "showName": "Vibrator",
+      "action": "com.mmigroup.action.VIBRATER",
+      "support": true,
+      "paramconfig": {
+        "is_auto_vibrate": false,
+        "randomVibSupport": false,
+        "shortInterval": [
+          200,
+          200
+        ],
+        "longInterval": [
+          200,
+          1000
+        ],
+        "randomInterval": [
+          6,
+          400,
+          400
+        ]
+      }
+    },
+    {
+      "showName": "LCD",
+      "action": "com.mmigroup.action.LCD",
+      "support": true,
+      "automatic": false,
+      "support_autoTest_autopass": false,
+      "paramconfig": {
+        "auto_switch": false,
+        "first_three_delay": 2000,
+        "lcd_pic": [
+          "R=2000",
+          "G=2000",
+          "B=2000",
+          "L255=2000",
+          "L64=2000",
+          "L0=2000",
+          "Transition_Gray=2000"
+        ]
+      }
+    },
+    {
+      "showName": "Speaker"
+    },
+    {
+      "showName": "MainCamera"
+    },
+    {
+      "showName": "DepthCamera"
+    },
+    {
+      "showName": "DualBackCamera"
+    },
+    {
+      "showName": "WideCamera"
+    },
+    {
+      "showName": "MacroCamera"
+    },
+    {
+      "showName": "FrontCamera"
+    },
+    {
+      "showName": "Receiver"
+    },
+    {
+      "showName": "LightTEST"
+    },
+    {
+      "showName": "HeadSet",
+      "paramconfig": {
+        "keyCode": [
+          "HEADSETHOOK"
+        ]
+      }
+    },
+    {
+      "showName": "MainMicToReceiver",
+      "paramconfig": {
+        "volume_rate": 0.5
+      }
+    },
+    {
+      "showName": "FM"
+    },
+    {
+      "showName": "TouchPal"
+    },
+    {
+      "showName": "TpOpenShort"
+    },
+    {
+      "showName": "SubMicToSpeaker"
+    },
+    {
+      "showName": "Battery",
+      "paramconfig": {
+        "support_typec_check": true
+      }
+    },
+    {
+      "showName": "SdCard",
+      "support_background_test": false
+    },
+    {
+      "showName": "SIMCard",
+      "support_background_test": false
+    },
+    {
+      "showName": "Wlan",
+      "support_background_test": false
+    },
+    {
+      "showName": "Bluetooth",
+      "support_background_test": false
+    },
+    {
+      "showName": "GPS",
+      "support_background_test": false
+    },
+    {
+      "showName": "OTG"
+    },
+    {
+      "showName": "HsMicToHeadPhone"
+    },
+    {
+      "showName": "Accelerometer",
+      "paramconfig": {
+        "support_calibrate": false,
+        "support_axialresult": false,
+        "support_angle45": true,
+        "support_angleneg45": true,
+        "is_auto_calibrate": false
+      }
+    },
+    {
+      "showName": "Optical"
+    },
+    {
+      "showName": "Proximity"
+    },
+    {
+      "showName": "Gyroscope",
+      "paramconfig": {
+        "support_calibrate": false
+      }
+    },
+    {
+      "showName": "Magnetic"
+    },
+    {
+      "showName": "fingerprint"
+    },
+    {
+      "showName": "Sar1"
+    },
+    {
+      "showName": "Sar2"
+    },
+    {
+      "showName": "NFC_Test"
+    }
+  ]
+}
